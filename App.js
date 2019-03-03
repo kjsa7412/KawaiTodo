@@ -5,7 +5,6 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        // 
         <StatusBar barstyle="ligth-content"/>
         <Text>첫걸음</Text>
       </View>
