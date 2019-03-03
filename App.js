@@ -45,7 +45,7 @@ export default class App extends React.Component {
             returnKeyType={"done"}
             autoCorrect={false}
           />
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.toDos}>
             <ToDo />
           </ScrollView>
         </View>
@@ -54,6 +54,11 @@ export default class App extends React.Component {
   }
 
   // Action에 대한 정의
+
+  // [Issue]
+  // 여기에 무슨 코딩 문제가 있었는지 모르겠지만
+  // 타이핑 하면 테스트가 newToDo: "" 상태로 초기화 되는 문제가 있었음
+  // 그런데..? 지우고 똑같이 다시 코딩하니까 문제가 사라짐
   _controlNewToDo = text => {
     this.setState({
       newToDo: text
@@ -120,5 +125,8 @@ const styles = StyleSheet.create({
     // 아래 테두리 굵기
     borderBottomWidth: 1,
     fontSize: 25
+  },
+  toDos: {
+    alignItems: "center"
   }
 });
