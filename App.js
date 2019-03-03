@@ -1,22 +1,83 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// Component 들을 추가 해야지 아래에서 사용 할 수 있다.
+// StatusBar, TextInput를 사용하기 위해서 Import 함
+import { StyleSheet, Text, View, StatusBar, TextInput, Dimensions, Platform } from 'react-native';
 
-export default class App extends React.Component {
+// height, width에 대한 정의를 내린다.
+// windows라고 쓰면 전체 화면에 대한 길이를 정의.
+const { height, width } = Dimensions.get("window") ;
+
+export default class App extends React.Component { 
   render() {
     return (
+      // View 안에 Compoenet 들은 순서대로 화면에 표시 된다.
       <View style={styles.container}>
-        <StatusBar barstyle="ligth-content"/>
-        <Text>첫걸음</Text>
+        <StatusBar barstyle="light-content" />
+        <Text style={styles.title}>Kawai To Do</Text>
+        <View style={styles.card}>
+          <TextInput style={styles.input} placeholder={"New To Do"} />
+        </View>
       </View>
     );
   }
 }
 
+// styles에 대한 상세 정의는 아래와 같이 한다.
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F23657',
+    // 좌우중간
     alignItems: 'center',
-    justifyContent: 'center',
+    // 상하중간
+    //justifyContent: 'center',
   },
+  title: {
+    color: "white",
+    fontSize: 30,
+    // 위 여백
+    marginTop: 50,
+    // 글자 굵기
+    fontWeight: "200",
+    // 아래 여백
+    marginBottom: 30
+  },
+  card:{
+    backgroundColor: "white",
+    flex: 1,
+    width: width - 25,
+    // 모서리 둥글게
+    //borderRadius: 10
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    // Shodow는 android, ios 둘다 다르다
+    // 그래서 Platform 이 뭔지 알아야 한다.
+    ...Platform.select({
+      ios: {
+        shadowColor:"rgb(50, 50, 50)",
+        // 투명도
+        shadowOpacity: 0.5,
+        // 그림자 곡률
+        shadowRadius: 5,
+        shadowOffset:{
+          // 위로 뻗도록
+          height:-1,
+          // 좌우는 없도록
+          width:0
+        }
+      },
+      android: {
+        elevation: 3
+      }
+    })
+  },
+  input: {
+    // 상하좌우여백
+    padding: 20,
+    // 아래 테두리 색상
+    borderBottomColor: "#bbb",
+    // 아래 테두리 굵기
+    borderBottomWidth: 1,
+    fontSize: 25
+  }
 });
