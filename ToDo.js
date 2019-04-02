@@ -15,19 +15,33 @@ export default class ToDo extends Component {
   // 하나는 수정 시
   state = {
     // 자료형은 초기화 값에 따라 지정 되는듯
-    isEditing: false
+    isEditing: false,
+    isCompleted: false
   };
   render() {
+    const { isCompleted } = this.state;
     // TouchableOpacity 은 Component 에 대해서 클릭 속성을 부여 할 수 있음.
     return (
       <View style={styles.container}>
-        <TouchableOpacity>
-          <View style={styles.circle} />
+        <TouchableOpacity onPress={this._toggleComplete}>
+          <View
+            style={[
+              styles.circle,
+              isCompleted ? styles.completedCircle : styles.uncompletedCircle
+            ]}
+          />
         </TouchableOpacity>
         <Text style={styles.text}> Hello I'm To Do </Text>
       </View>
     );
   }
+  _toggleComplete = () => {
+    this.setState(prevState => {
+      return {
+        isCompleted: !prevState.isCompleted
+      };
+    });
+  };
 }
 
 const styles = StyleSheet.create({
@@ -46,6 +60,12 @@ const styles = StyleSheet.create({
     borderColor: "red",
     borderWidth: 3,
     marginRight: 20
+  },
+  completedCircle: {
+    borderColor: "#bbb"
+  },
+  uncompletedCircle: {
+    borderColor: "#F23657"
   },
   text: {
     fontWeight: "600",
